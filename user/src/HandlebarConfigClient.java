@@ -1,4 +1,3 @@
-package at.jku.client;
 
 import at.jku.restservice.HandlebarConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
