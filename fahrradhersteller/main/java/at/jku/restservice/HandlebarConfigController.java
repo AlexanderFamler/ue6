@@ -3,6 +3,7 @@ package at.jku.restservice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import restapi.RestConfig;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -116,6 +117,11 @@ import java.util.Random;
                         + " is not compatible with material of handlebar " + handlebarMaterial);
             }
         }
+
+        RestConfig restapi = new RestConfig();
+
+        System.out.println(restapi.order("s","s","s","s"));
+
 
         final Random rnd = new Random();
         final HandlebarConfig handlebarConfig =

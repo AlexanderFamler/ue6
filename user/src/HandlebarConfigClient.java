@@ -24,7 +24,7 @@ public class HandlebarConfigClient {
                 HttpResponse<String> response =
                     client.send(request, HttpResponse.BodyHandlers.ofString());
                 objectMapper.readValue(response.body(), List.class).forEach(System.out::println);
-                System.out.println("Input >");
+                System.out.print("Input >");
                 final String handlebarType = in.nextLine();
 
                 System.out.println("Choose type of material. Available values are:");
@@ -33,7 +33,7 @@ public class HandlebarConfigClient {
                     .build();
                 response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 objectMapper.readValue(response.body(), List.class).forEach(System.out::println);
-                System.out.println("Input >");
+                System.out.print("Input >");
                 final String handlebarMaterial = in.nextLine();
 
                 System.out.println("Choose type of gearshift. Available values are:");
@@ -42,7 +42,7 @@ public class HandlebarConfigClient {
                         + handlebarMaterial)).build();
                 response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 objectMapper.readValue(response.body(), List.class).forEach(System.out::println);
-                System.out.println("Input >");
+                System.out.print("Input >");
                 final String handlebarGearshift = in.nextLine();
 
                 System.out.println("Choose type of handle material. Available values are:");
@@ -51,7 +51,7 @@ public class HandlebarConfigClient {
                         + handlebarMaterial + "&handlebarMaterial=" + handlebarMaterial)).build();
                 response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 objectMapper.readValue(response.body(), List.class).forEach(System.out::println);
-                System.out.println("Input >");
+                System.out.print("Input >");
                 final String handleMaterial = in.nextLine();
 
                 final String uri = MessageFormat
