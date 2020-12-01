@@ -1,22 +1,24 @@
 package main.java.at.jku.restservice;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import javax.sql.DataSource;
-
-@Configuration
 public class Database {
-    @Bean
-    public DataSource mysqlDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/test");
-        dataSource.setUsername("guest_user");
-        dataSource.setPassword("guest_password");
 
-        return dataSource;
+    public static void main(String args[]){
+        try{
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/test","root","root");
+            /*
+//here db is database name, root is username and password
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from orders");
+            while(rs.next())
+                System.out.println(rs.getLong(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"" +
+                        " "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getDate(2));
+            con.close(); */
+        }catch(Exception e){ System.out.println(e);}
     }
+
 }

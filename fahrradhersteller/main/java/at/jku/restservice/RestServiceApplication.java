@@ -24,13 +24,11 @@ public class RestServiceApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(RestServiceApplication.class, args);
-
-        NamedParameterJdbcTemplate template =
-                new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
     public void run(final String... args) throws Exception {
+
         jdbcTemplate.execute("DROP TABLE orders IF EXISTS");
         jdbcTemplate.execute("CREATE TABLE orders(" +
                 "orderId SERIAL, handlebarType VARCHAR(255),handlebarMaterial VARCHAR(255)," +
