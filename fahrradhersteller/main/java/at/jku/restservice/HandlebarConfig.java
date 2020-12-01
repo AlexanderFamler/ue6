@@ -1,6 +1,5 @@
-package main.java.at.jku.restservice;
+package at.jku.restservice;
 
-import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.Date;
 

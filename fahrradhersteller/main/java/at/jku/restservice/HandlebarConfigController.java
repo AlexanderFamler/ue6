@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-import restapi.RestConfig;
-import main.java.at.jku.restservice.HandlebarConfig;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -130,9 +128,8 @@ import java.util.Random;
             }
         }
 
-        RestConfig restapi = new RestConfig();
 
-        System.out.println(restapi.order("s","s","s","s"));
+
 
 
         final Random rnd = new Random();

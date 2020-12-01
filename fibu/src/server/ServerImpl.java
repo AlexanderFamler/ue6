@@ -15,8 +15,9 @@ public class ServerImpl implements FibuConfi {
     }
 
     @Override
-    public void saveDataAsFile() throws RemoteException {
-
+    public void saveDataAsFile() throws RemoteException
+    {
+            
 
         List<String> bestellung = new ArrayList<>();  // ToDo ArrayList = Hol Daten als String vom RestService
         FileWriter writer = null;
