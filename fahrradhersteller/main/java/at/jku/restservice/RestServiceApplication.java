@@ -1,4 +1,4 @@
-package main.java.at.jku.restservice;
+package at.jku.restservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

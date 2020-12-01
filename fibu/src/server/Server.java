@@ -1,7 +1,6 @@
-package src.server;
+package server;
 
-import src.shared.FibuConfi;
-import src.server.ServerImpl;
+import shared.FibuConfi;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -14,6 +13,7 @@ public class Server {
         FibuConfi server = new ServerImpl();
         Registry registry = LocateRegistry.createRegistry(5099);
         registry.bind("Server",server);
+        server.saveDataAsFile();
         System.out.println("Server started");
     }
 }

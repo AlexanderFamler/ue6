@@ -1,4 +1,4 @@
-package main.java.at.jku.restservice;
+package at.jku.restservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,16 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import restapi.RestConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+import main.java.at.jku.restservice.HandlebarConfig;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,9 +65,9 @@ import java.util.Random;
 
     @PostMapping("/order/{1}/{2}/{3}/{4}")
     public ResponseEntity<HandlebarConfig> order(@PathVariable("1") final String handlebarType,
-        @PathVariable("2") final String handlebarMaterial,
-        @PathVariable("3") final String handlebarGearshift,
-        @PathVariable("4") final String handleMaterial) {
+                                                                              @PathVariable("2") final String handlebarMaterial,
+                                                                              @PathVariable("3") final String handlebarGearshift,
+                                                                              @PathVariable("4") final String handleMaterial) {
 
         if (!availableHandlebarTypes.contains(handlebarType)) {
             return getBadRequestResponseEntity(handlebarType, handlebarMaterial, handlebarGearshift,

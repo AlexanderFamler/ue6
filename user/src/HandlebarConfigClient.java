@@ -1,5 +1,5 @@
 
-import at.jku.restservice.HandlebarConfig;
+import main.java.at.jku.restservice.HandlebarConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
