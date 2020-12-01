@@ -1,7 +1,6 @@
 package main.java.at.jku.restservice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +19,6 @@ import java.util.Random;
 
 @RestController public class HandlebarConfigController {
 
-    private static final Logger log = LoggerFactory.getLogger(HandlebarConfigController.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -65,7 +67,7 @@ import java.util.Random;
     public ResponseEntity<HandlebarConfig> order(@PathVariable("1") final String handlebarType,
                                                                               @PathVariable("2") final String handlebarMaterial,
                                                                               @PathVariable("3") final String handlebarGearshift,
-                                                                              @PathVariable("4") final String handleMaterial) {
+                                                                              @PathVariable("4") final String handleMaterial) throws SQLException {
 
         if (!availableHandlebarTypes.contains(handlebarType)) {
             return getBadRequestResponseEntity(handlebarType, handlebarMaterial, handlebarGearshift,
@@ -135,9 +137,14 @@ import java.util.Random;
         final HandlebarConfig handlebarConfig =
             new HandlebarConfig(orderId, handlebarType, handlebarMaterial,
                 handlebarGearshift, handleMaterial, deliveryDate);
-  jdbcTemplate.update("INSERT INTO orders(orderId,handlebarType,handlebarMaterial,handlebarGearshift,handleMaterial,deliveryDate) VALUES (?,?,?,?,?,?)",
-                        orderId, handlebarType,handlebarMaterial,handlebarGearshift, handleMaterial, deliveryDate);
-
+        try{
+        Connection con= DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/test?serverTimezone=UTC","root","#rentWare");
+        Statement stmt=con.createStatement();
+        stmt.executeUpdate("INSERT INTO orders(orderId,handlebarType,handlebarMaterial,handlebarGearshift,handleMaterial,deliveryDate)" +
+                "VALUES ('"+orderId+"','"+handlebarType+"','"+handlebarMaterial+"',"+handlebarGearshift+",'"+handleMaterial+",'"+deliveryDate+"')");
+        con.close();
+        }catch(Exception e){ System.out.println(e);}
         return ResponseEntity.ok(handlebarConfig);
     }
 
