@@ -1,4 +1,4 @@
-package shared;
+package src.shared;
 
 
 import java.rmi.Remote;

@@ -1,6 +1,6 @@
-package server;
+package src.server;
 
-import shared.FibuConfi;
+import src.shared.FibuConfi;
 
 import java.io.FileWriter;
 import java.io.IOException;

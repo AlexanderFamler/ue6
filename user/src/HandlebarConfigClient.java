@@ -1,6 +1,11 @@
+package src;
 
-import at.jku.restservice.HandlebarConfig;
+import  main.java.at.jku.restservice.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,6 +17,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HandlebarConfigClient {
+
+    private static final Logger log = LoggerFactory.getLogger(HandlebarConfigClient.class);
+
+    private static RestTemplate restTemplate = new RestTemplate();
+
     public static void main(String[] args) {
         final Scanner in = new Scanner(System.in);
         final ObjectMapper objectMapper = new ObjectMapper();
@@ -65,6 +75,9 @@ public class HandlebarConfigClient {
                     final HandlebarConfig handlebarConfig =
                         objectMapper.readValue(body, HandlebarConfig.class);
                     System.out.println("Result > " + handlebarConfig);
+
+                    log.info(String.valueOf(handlebarConfig));
+
                 } else {
                     if (body != null && !body.isEmpty()) {
                         System.out.println("Something went wrong > " + body);
@@ -80,6 +93,8 @@ public class HandlebarConfigClient {
                 e.printStackTrace();
                 break;
             }
+
+
         }
     }
 }

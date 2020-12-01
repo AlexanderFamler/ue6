@@ -1,4 +1,4 @@
-package restapi;
+package src.restapi;
 
 import org.springframework.web.bind.annotation.RestController;
 

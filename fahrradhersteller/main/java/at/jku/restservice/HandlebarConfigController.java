@@ -1,4 +1,4 @@
-package at.jku.restservice;
+package main.java.at.jku.restservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,9 +127,6 @@ import java.util.Random;
                         + " is not compatible with material of handlebar " + handlebarMaterial);
             }
         }
-
-
-
 
 
         final Random rnd = new Random();

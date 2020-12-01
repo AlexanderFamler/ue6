@@ -1,7 +1,7 @@
-package restapi2;
+package src.restapi2;
 
 import org.springframework.web.bind.annotation.RestController;
-import restapi.RestConfig;
+import src.restapi.RestConfig;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

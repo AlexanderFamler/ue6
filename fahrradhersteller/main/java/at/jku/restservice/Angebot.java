@@ -1,7 +1,7 @@
-package at.jku.restservice;
+package main.java.at.jku.restservice;
 
-import restapi.RestConfig;
-import restapi2.RestConfig2;
+import src.restapi.RestConfig;
+import src.restapi2.RestConfig2;
 
 import java.util.ArrayList;
 import java.util.List;
