@@ -8,14 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.sql.*;
+import java.sql.Date;
+import java.util.*;
 
 @RestController public class HandlebarConfigController {
 
@@ -133,18 +128,41 @@ import java.util.Random;
 
         final Random rnd = new Random();
         long orderId = BigInteger.probablePrime(8, rnd).longValue();
-        Date deliveryDate = new Date();
-        final HandlebarConfig handlebarConfig =
-            new HandlebarConfig(orderId, handlebarType, handlebarMaterial,
-                handlebarGearshift, handleMaterial, deliveryDate);
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date deliveryDate = new java.sql.Date(calendar.getTime().getTime());
+
+
         try{
-        Connection con= DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/test?serverTimezone=UTC","root","#rentWare");
-        Statement stmt=con.createStatement();
-        stmt.executeUpdate("INSERT INTO orders(orderId,handlebarType,handlebarMaterial,handlebarGearshift,handleMaterial,deliveryDate)" +
-                "VALUES ('"+orderId+"','"+handlebarType+"','"+handlebarMaterial+"',"+handlebarGearshift+",'"+handleMaterial+",'"+deliveryDate+"')");
+            Connection con = Database.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("INSERT INTO orders(orderId, handlebarType, handlebarMaterial,handlebarGearshift, handleMaterial, deliveryDate) " +
+                " VALUES  (?,?,?,?,?,?)");
+            pstmt.setLong(1, orderId );
+            pstmt.setString(2, handlebarType);
+            pstmt.setString(3, handlebarMaterial);
+            pstmt.setString(4, handlebarGearshift);
+            pstmt.setString(5,handleMaterial );
+            pstmt.setDate(6, deliveryDate);
+            pstmt.executeUpdate();
         con.close();
         }catch(Exception e){ System.out.println(e);}
+
+        //testing if item is in DB
+        try{
+            Connection con = Database.getConnection();
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from orders");
+            while(rs.next())
+                System.out.println(rs.getLong(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"" +
+                        " "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getDate(2));
+            con.close();
+
+        }catch(Exception e){ System.out.println(e);}
+
+
+        final HandlebarConfig handlebarConfig =
+                new HandlebarConfig(orderId, handlebarType, handlebarMaterial,
+                        handlebarGearshift, handleMaterial, deliveryDate);
+
         return ResponseEntity.ok(handlebarConfig);
     }
 

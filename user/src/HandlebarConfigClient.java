@@ -76,8 +76,6 @@ public class HandlebarConfigClient {
                         objectMapper.readValue(body, HandlebarConfig.class);
                     System.out.println("Result > " + handlebarConfig);
 
-                    log.info(String.valueOf(handlebarConfig));
-
                 } else {
                     if (body != null && !body.isEmpty()) {
                         System.out.println("Something went wrong > " + body);
