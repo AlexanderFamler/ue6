@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.jku.restservice;
+package test.java.at.jku.restservice;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+//import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @Autowired private MockMvc mockMvc;
 
-    @Test public void listOfAvailableHandlebarTypes() throws Exception {
+    @Test
+    public void listOfAvailableHandlebarTypes() throws Exception {
         this.mockMvc.perform(get("/getAvailableHandlebarTypes")).andDo(print())
             .andExpect(status().isOk());
     }

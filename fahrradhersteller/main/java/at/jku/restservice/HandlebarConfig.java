@@ -1,11 +1,11 @@
-package at.jku.restservice;
+package main.java.at.jku.restservice;
 
 import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.Date;
 
 public class HandlebarConfig {
-    private BigInteger orderId;
+    private long orderId;
     private String handlebarType;
     private String handlebarMaterial;
     private String handlebarGearshift;
@@ -16,7 +16,7 @@ public class HandlebarConfig {
         //empty constructor
     }
 
-    public HandlebarConfig(final BigInteger orderId, final String handlebarType,
+    public HandlebarConfig(final long orderId, final String handlebarType,
         final String handlebarMaterial, final String handlebarGearshift,
         final String handleMaterial, final Date deliveryDate) {
         this.orderId = orderId;
@@ -27,11 +27,11 @@ public class HandlebarConfig {
         this.deliveryDate = deliveryDate;
     }
 
-    public BigInteger getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(final BigInteger orderId) {
+    public void setOrderId(final long orderId) {
         this.orderId = orderId;
     }
 

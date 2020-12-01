@@ -1,10 +1,23 @@
-package at.jku.restservice;
+package main.java.at.jku.restservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import restapi.RestConfig;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +25,12 @@ import java.util.List;
 import java.util.Random;
 
 @RestController public class HandlebarConfigController {
+
+    private static final Logger log = LoggerFactory.getLogger(HandlebarConfigController.class);
+
+    private final JdbcTemplate jdbcTemplate;
+
+
 
     public static final String RENNRADLENKER = "Rennradlenker";
     public static final String FLATBARLENKER = "Flatbarlenker";
@@ -26,7 +45,8 @@ import java.util.Random;
     private final List<String> availableGearshifts;
     private final List<String> availableHandleMaterial;
 
-    public HandlebarConfigController() {
+    @Autowired
+    public HandlebarConfigController(final JdbcTemplate jdbcTemplate) {
         availableHandlebarTypes = new ArrayList<>();
         availableHandlebarTypes.add(FLATBARLENKER);
         availableHandlebarTypes.add(RENNRADLENKER);
@@ -46,6 +66,9 @@ import java.util.Random;
         availableHandleMaterial.add(LEDERGRIFF);
         availableHandleMaterial.add("Schaumstoffgriff");
         availableHandleMaterial.add(KUNSTSTOFFGRIFF);
+
+        this.jdbcTemplate = jdbcTemplate;
+
     }
 
     @PostMapping("/order/{1}/{2}/{3}/{4}")
@@ -74,7 +97,6 @@ import java.util.Random;
                 handleMaterial,
                 "Configuration wrong: Type of handle " + handleMaterial + " is not available.");
         }
-
         if (RENNRADLENKER.equalsIgnoreCase(handlebarType)) {
             if (!ALUMINIUM.equalsIgnoreCase(handlebarMaterial) && !KUNSTSTOFF
                 .equalsIgnoreCase(handlebarMaterial)) {
@@ -93,7 +115,6 @@ import java.util.Random;
                         + handlebarMaterial);
             }
         }
-
         if (STAHL.equalsIgnoreCase(handlebarMaterial)) {
             if (!KETTENSCHALTUNG.equalsIgnoreCase(handlebarGearshift)) {
                 return getBadRequestResponseEntity(handlebarType, handlebarMaterial,
@@ -102,7 +123,6 @@ import java.util.Random;
                         + " is not compatible with gearshift " + handlebarGearshift);
             }
         }
-
         if (KUNSTSTOFFGRIFF.equalsIgnoreCase(handleMaterial)) {
             if (!KUNSTSTOFF.equalsIgnoreCase(handlebarMaterial)) {
                 return getBadRequestResponseEntity(handlebarType, handlebarMaterial,
@@ -124,9 +144,14 @@ import java.util.Random;
 
 
         final Random rnd = new Random();
+        long orderId = BigInteger.probablePrime(8, rnd).longValue();
+        Date deliveryDate = new Date();
         final HandlebarConfig handlebarConfig =
-            new HandlebarConfig(BigInteger.probablePrime(8, rnd), handlebarType, handlebarMaterial,
-                handlebarGearshift, handleMaterial, new Date());
+            new HandlebarConfig(orderId, handlebarType, handlebarMaterial,
+                handlebarGearshift, handleMaterial, deliveryDate);
+  jdbcTemplate.update("INSERT INTO orders(orderId,handlebarType,handlebarMaterial,handlebarGearshift,handleMaterial,deliveryDate) VALUES (?,?,?,?,?,?)",
+                        orderId, handlebarType,handlebarMaterial,handlebarGearshift, handleMaterial, deliveryDate);
+
         return ResponseEntity.ok(handlebarConfig);
     }
 

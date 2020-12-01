@@ -1,4 +1,4 @@
-package at.jku.restservice;
+package main.java.at.jku.restservice;
 
 public class Angebot {
 }

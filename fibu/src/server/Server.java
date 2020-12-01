@@ -1,6 +1,7 @@
-package server;
+package src.server;
 
-import shared.FibuConfi;
+import src.shared.FibuConfi;
+import src.server.ServerImpl;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
